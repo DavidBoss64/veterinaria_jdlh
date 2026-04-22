@@ -1,11 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{%extends "base.html"%}
+
+{%block title%}Index{%endblock%}
+
+{%block content%}
+<h1>Pagina Principal</h1>
+
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Mascota</th>
+            <th scope="col">Propietario</th>
+            <th scope="col">Especie</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+
+    {%for paciente in pacientes%}
+    <tbody class="mb-1">
+        <tr>
+            <th scope="row">{{paciente.id}}</th>
+            <td>{{paciente.mascota}}</td>
+            <td>{{paciente.propietario}}</td>
+            <td>{{paciente.especie}}</td>
+            <td>{{paciente.fecha}}</td>
+        </tr>
+    </tbody>
+    {%endfor%}
+</table>
+{%endblock%}
