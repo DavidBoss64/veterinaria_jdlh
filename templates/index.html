@@ -5,7 +5,7 @@
 {%block content%}
 <h1>Pagina Principal</h1>
 
-
+<a href="/agendar" class="btn btn-primary mb-3">Agregar cita</a>
 <table class="table">
     <thead class="table-dark">
         <tr>
@@ -26,6 +26,10 @@
             <td>{{paciente.propietario}}</td>
             <td>{{paciente.especie}}</td>
             <td>{{paciente.fecha}}</td>
+            <td>
+                <a href="/editar/{{paciente.id}}" class="btn btn-secondary">Editar</a>
+                <a href="" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
     </tbody>
     {%endfor%}

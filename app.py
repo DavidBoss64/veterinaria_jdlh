@@ -1,4 +1,4 @@
-from flask import Flask,request,url_for,render_template
+from flask import Flask,request,url_for,render_template, redirect
 import sqlite3
 
 
@@ -37,6 +37,72 @@ def index():
 
     return render_template("index.html",pacientes=pacientes)
 
+@app.route('/agendar')
+def agendar():
+    return render_template("agendar.html")
+
+@app.route('/agendar/agregar',methods = ['POST'])
+def agregar():
+    conn = sqlite3.connect("citas.db")
+    conn.row_factory=sqlite3.Row
+
+    mascota = request.form['mascota']
+    propietario = request.form['propietario']
+    especie = request.form['especie']
+
+    cursor=conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO pacientes(mascota,propietario,especie)
+    VALUES(?,?,?)
+""",(mascota,propietario,especie))
+    
+    conn.commit()
+    conn.close()
+
+    return redirect('/')
+
+
+@app.route('/editar/<int:id>', methods=['GET'])
+def editar(id):
+    conn = sqlite3.connect("citas.db")
+    conn.row_factory=sqlite3.Row
+
+    cursor=conn.cursor()
+
+    cursor.execute("""
+        SELECT * FROM pacientes
+        WHERE id = ?
+""",(id,))
+    
+    paciente = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+    return render_template("editar.html",paciente=paciente)
+
+@app.route('/guardar_editar', methods = ['POST'])
+def guardar_editar():
+
+    mascota = request.form['mascota']
+    propietario = request.form['propietario']
+    especie = request.form['especie']
+    id_m = request.form['id']
+
+    conn = sqlite3.connect("citas.db")
+    cursor=conn.cursor()
+
+    cursor.execute("""
+        UPDATE pacientes SET 
+            mascota = ?,
+            propietario = ?,
+            especie = ?
+        WHERE id = ?
+""",(mascota,propietario,especie,id_m))
+    conn.commit()
+    conn.close()
+
+    return redirect('/')
 
 if __name__ =="__main__":
     app.run(debug=True)

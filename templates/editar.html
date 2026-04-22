@@ -1,0 +1,25 @@
+{%extends "base.html"%}
+
+{%block title%}Editar cita{%endblock%}
+
+{%block content%}
+
+<h2 class="text-center">Editar cita</h2>
+<form action="/guardar_editar" method="POST">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Mascota</label>
+        <input type="text" class="form-control"  aria-describedby="emailHelp" name="mascota" value="{{paciente.mascota}}">
+        <input type="hidden" value="{{paciente.id}}" name="id">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Propietario</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="propietario" value="{{paciente.propietario}}">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Especie</label>
+        <input type="text" class="form-control" aria-colspan="especie" name="especie" value="{{paciente.especie}}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{%endblock%}
