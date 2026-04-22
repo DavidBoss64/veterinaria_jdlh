@@ -104,5 +104,20 @@ def guardar_editar():
 
     return redirect('/')
 
+@app.route('/cancelar/<int:id>', methods=['GET'])
+def cancelar(id):
+    
+    conn = sqlite3.connect("citas.db")
+
+    cursor=conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM pacientes WHERE id = ?
+    """,(id,))
+    
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
 if __name__ =="__main__":
     app.run(debug=True)
